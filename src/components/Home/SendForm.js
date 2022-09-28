@@ -22,7 +22,7 @@ const SendForm = ({ listOfUsers, loggedUser }) => {
             messageTitle: titleRef.current.value,
             messageContent: contentRef.current.value
         };
-        Axios.put("http://localhost:3001/sendmessage", data)
+        Axios.put("https://task-5-backend.herokuapp.com/sendmessage", data)
             .then(() => {
                 alert("Message send");
                 setEmailRef([]);

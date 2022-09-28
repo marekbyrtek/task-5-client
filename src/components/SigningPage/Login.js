@@ -18,7 +18,7 @@ const Login = () => {
         };
         setError("");
         setLoading(true);
-        Axios.post("http://localhost:3001/login", data)
+        Axios.post("https://task-5-backend.herokuapp.com/login", data)
             .then((resp) => {
                 localStorage.setItem("accessToken", resp.data.token);
                 setAuthState({

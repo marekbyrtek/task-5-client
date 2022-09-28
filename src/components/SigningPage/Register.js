@@ -16,7 +16,7 @@ const Register = () => {
         };
         setError("");
         setLoadnig(true);
-        Axios.post("http://localhost:3001/register", data)
+        Axios.post("https://task-5-backend.herokuapp.com/register", data)
             .then(() => {
                 navigate("/login");
             })

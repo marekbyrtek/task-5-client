@@ -18,7 +18,7 @@ const HomePage = () => {
     useEffect(() => {
         if(!localStorage.getItem("accessToken")) navigate("/login");
 
-        Axios.get("http://localhost:3001/auth", {
+        Axios.get("https://task-5-backend.herokuapp.com/auth", {
             headers: {
                 accessToken: localStorage.getItem("accessToken")
             }
@@ -48,14 +48,14 @@ const HomePage = () => {
     }
 
     useEffect(() => {
-        Axios.get(`http://localhost:3001/users/${authState.id}`).then((res) => {
+        Axios.get(`https://task-5-backend.herokuapp.com/users/${authState.id}`).then((res) => {
             setLoggedUser(res.data);
             setLoggedUserMessages(res.data.messages);
         })
     },[authState, counter]);
 
     useEffect(() => {
-        Axios.get("http://localhost:3001/users").then((res) => {
+        Axios.get("https://task-5-backend.herokuapp.com/users").then((res) => {
             const usersEmail = res.data.map((el) => {
                 return el.email
             });
