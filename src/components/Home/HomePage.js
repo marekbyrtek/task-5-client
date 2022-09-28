@@ -1,13 +1,17 @@
 import React, { useState, useEffect, useContext } from "react";
 import Axios from "axios";
-import { Alert, Button } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../AuthContext";
+import { CounterContext } from "./Context"
 import SendForm from "./SendForm";
+import UserMessages from "./UserMessages";
 
 const HomePage = () => {
     const [listOfUsers, setListOfUsers] = useState([]);
     const [loggedUser, setLoggedUser] = useState({});
+    const [loggedUserMessages, setLoggedUserMessages] = useState([]);
+    const [counter, setCounter] = useState(1);
     const { authState, setAuthState } = useContext(AuthContext);
     const navigate = useNavigate();
 
@@ -46,8 +50,9 @@ const HomePage = () => {
     useEffect(() => {
         Axios.get(`http://localhost:3001/users/${authState.id}`).then((res) => {
             setLoggedUser(res.data);
+            setLoggedUserMessages(res.data.messages);
         })
-    },[authState]);
+    },[authState, counter]);
 
     useEffect(() => {
         Axios.get("http://localhost:3001/users").then((res) => {
@@ -59,11 +64,17 @@ const HomePage = () => {
     }, []);
 
     return (
-        <div>
-            <Alert variant="danger">{loggedUser.email}</Alert>
-            <SendForm listOfUsers={listOfUsers} loggedUser={loggedUser} />
-            <Button onClick={handleLogout} variant="outline-primary" style={{marginLeft: "auto"}}>Log out</Button>
-        </div>
+        <CounterContext.Provider value={setCounter}>
+            <div className="w-100">
+                <div className="d-flex justify-content-between mb-3">
+                    <h1>{loggedUser.email}</h1>
+                    <Button onClick={handleLogout} variant="secondary" className="pt-0 pb-0">Log out</Button>
+                </div>
+                <SendForm listOfUsers={listOfUsers} loggedUser={loggedUser} />
+                <UserMessages loggedUserMessages={loggedUserMessages} />
+            </div>
+        </CounterContext.Provider>
+        
     )
 }
 

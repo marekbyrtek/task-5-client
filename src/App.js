@@ -14,7 +14,7 @@ function App() {
   });
 
   return (
-    <Container className="d-flex align-items-center justify-content-center app-style">
+    <Container className="d-flex align-flex-start justify-content-center app-style">
       <AuthContext.Provider value={{ authState, setAuthState }}>
         <Router>
           <Routes>
