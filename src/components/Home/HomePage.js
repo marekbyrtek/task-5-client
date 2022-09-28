@@ -3,6 +3,7 @@ import Axios from "axios";
 import { Alert, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../AuthContext";
+import SendForm from "./SendForm";
 
 const HomePage = () => {
     const [listOfUsers, setListOfUsers] = useState([]);
@@ -50,13 +51,17 @@ const HomePage = () => {
 
     useEffect(() => {
         Axios.get("http://localhost:3001/users").then((res) => {
-            setListOfUsers(res.data);
+            const usersEmail = res.data.map((el) => {
+                return el.email
+            });
+            setListOfUsers(usersEmail);
         })
     }, []);
 
     return (
         <div>
-            <Alert variant="danger">{loggedUser.email}</Alert> 
+            <Alert variant="danger">{loggedUser.email}</Alert>
+            <SendForm listOfUsers={listOfUsers} loggedUser={loggedUser} />
             <Button onClick={handleLogout} variant="outline-primary" style={{marginLeft: "auto"}}>Log out</Button>
         </div>
     )
